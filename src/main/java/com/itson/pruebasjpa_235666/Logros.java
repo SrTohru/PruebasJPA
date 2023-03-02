@@ -1,6 +1,7 @@
 package com.itson.pruebasjpa_235666;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Logros implements Serializable {
     @Column(name = "puntos", nullable = false)
     private Integer puntos;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "idVideojuego", nullable = false)
     private Videojuego videojuego;
     

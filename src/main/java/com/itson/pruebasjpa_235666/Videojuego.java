@@ -2,6 +2,7 @@ package com.itson.pruebasjpa_235666;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class Videojuego implements Serializable {
     @Column(name = "puntaje", nullable = false)
     private Integer puntaje;
 
-    @OneToMany(mappedBy = "videojuego")
+    @OneToMany(mappedBy = "videojuego", cascade = CascadeType.PERSIST)
     private List<Logros> logros;
     
     
@@ -123,11 +124,6 @@ public class Videojuego implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.itson.pruebasjpa_233233.Videojuego[ id=" + id + " ]";
     }
 
 }
