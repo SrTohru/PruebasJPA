@@ -1,6 +1,7 @@
 package com.itson.pruebasjpa_235666;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "videojuegos")
@@ -29,17 +32,21 @@ public class Videojuego implements Serializable {
     @Column(name = "puntaje", nullable = false)
     private Integer puntaje;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fechaLanzamiento", nullable = false)
+    private Calendar fechaLanzamiento;
+
     @OneToMany(mappedBy = "videojuego", cascade = CascadeType.PERSIST)
     private List<Logros> logros;
-    
-    
+
     public Videojuego() {
     }
 
-    public Videojuego(String name, String desarrolladoras, Integer puntaje) {
+    public Videojuego(String name, String desarrolladoras, Integer puntaje, Calendar fechaLanzamiento) {
         this.name = name;
         this.desarrolladoras = desarrolladoras;
         this.puntaje = puntaje;
+        this.fechaLanzamiento = fechaLanzamiento;
     }
 
     public Videojuego(Long id, String name, String desarrolladoras, Integer puntaje) {
@@ -56,6 +63,16 @@ public class Videojuego implements Serializable {
         this.puntaje = puntaje;
         this.logros = logros;
     }
+
+    public Calendar getFechaLanzamiento() {
+        return fechaLanzamiento;
+    }
+
+    public void setFechaLanzamiento(Calendar fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
+    }
+
+    
     
     public List<Logros> getLogros() {
         return logros;
@@ -65,8 +82,6 @@ public class Videojuego implements Serializable {
         this.logros = logros;
     }
 
-    
-    
     public String getDesarrolladoras() {
         return desarrolladoras;
     }

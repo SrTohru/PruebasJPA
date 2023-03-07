@@ -1,8 +1,11 @@
 package com.itson.pruebasjpa_235666;
 
+import com.itson.pruebasjpa_DAO.LogrosDAO;
+import com.itson.pruebasjpa_DAO.VideojuegosDAO;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -10,45 +13,62 @@ import javax.persistence.Persistence;
 public class PruebasJPA_235666 {
 
     public static void main(String[] args) {
-        
-       // Videojuego videojuego = new Videojuego("Minecraft", "Mojan", 72);
-        //Logros logro1 = new Logros("Waterdrop", 100, videojuego);
-        //Logros logro2 = new Logros(" sin valde agua", 6969, videojuego);
-        
-        
-        Jugador jugador = new Jugador("SrTohru",
-                Sexo.HOMBRE,
-                new GregorianCalendar(2003,Calendar.DECEMBER, 07),
-                new Direccion("Calkini", "2022", "Espigas"));
-        
+
+        VideojuegosDAO vDAO = new VideojuegosDAO();
+        LogrosDAO lDAO = new LogrosDAO();
+
         EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("com.itson_PruebasJPA_235666_jar_1.0");
         EntityManager entityManager = managerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+        System.out.println("------------------");
+        System.out.println("------------------");
+        System.out.println("Consultar por nombre");
+        System.out.println("------------------");
+        System.out.println("------------------");
 
-        entityManager.persist(jugador);
-//        Logros logro = entityManager.find(Logros.class, (long) 1);
-//        
-//        if(logro != null){
-//            entityManager.remove(logro);
-//        }else{
-//            System.out.println("No se encontro dicho logro");
-//        }
-        
-//        Long idVideojueego = 2L;
-//        Videojuego v = entityManager.find(Videojuego.class, idVideojueego);
-//
-//        if (v != null) {
-//            v.setName("asdjjoadsjioas 3");
-//            
-//            entityManager.persist(v);
-//        }else{
-//            System.out.println("No se encontro");
-//        }
+        List<Videojuego> resultados = vDAO.consultarPorNombre("Minecraft");
+        for (Videojuego v : resultados) {
+            System.out.println("------------------");
+            System.out.println("Id: " + v.getId());
+            System.out.println("Nombre: " + v.getName());
+            System.out.println("Desarrollador: " + v.getDesarrolladoras());
+            System.out.println("Puntaje: " + v.getPuntaje());
+            System.out.println("------------------");
+        }
 
-//        Videojuego videojuego = new Videojuego();
-//        videojuego.setName("Minecraft 2");
-//        videojuego.setRating(100);
-    //    entityManager.persist(videojuego);
+        System.out.println("------------------");
+        System.out.println("------------------");
+        System.out.println("Consultar por puntaje de logros");
+        System.out.println("------------------");
+        System.out.println("------------------");
+
+        List<Logros> results = lDAO.consultarPorPuntaje(100);
+        for (Logros l : results) {
+            System.out.println("------------------");
+            System.out.println("Id: " + l.getId());
+            System.out.println("Nombre: " + l.getName());
+            System.out.println("Puntos: " + l.getPuntos());
+            System.out.println("Id videojuego: " + l.getVideojuego().getId());
+            System.out.println("------------------");
+        }
+
+        System.out.println("------------------");
+        System.out.println("------------------");
+        System.out.println("Consultar por fecha lanzamiento");
+        System.out.println("------------------");
+        System.out.println("------------------");
+
+        List<Videojuego> results2 = vDAO.consultarPorFechaLanzamiento(new GregorianCalendar(2013, Calendar.JANUARY, 22));
+
+        for (Videojuego v : results2) {
+            System.out.println("------------------");
+            System.out.println("Id: " + v.getId());
+            System.out.println("Nombre: " + v.getName());
+            System.out.println("Desarrollador: " + v.getDesarrolladoras());
+            System.out.println("Puntaje: " + v.getPuntaje());
+            System.out.println("Fecha lanzamiento: " + v.getFechaLanzamiento());
+            System.out.println("------------------");
+        }
         entityManager.getTransaction().commit();
 
     }

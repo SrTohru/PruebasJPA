@@ -34,7 +34,7 @@ public class Jugador implements Serializable {
     
     
     @Temporal(TemporalType.DATE)
-    @Column(name = "fechaNacimiento", unique = true ,nullable = false, length = 100)
+    @Column(name = "fechaNacimiento" ,nullable = false, length = 100)
     private Calendar fechaNacimiento;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
