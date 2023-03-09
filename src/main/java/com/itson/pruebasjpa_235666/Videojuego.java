@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -36,6 +38,9 @@ public class Videojuego implements Serializable {
     @Column(name = "fechaLanzamiento", nullable = false)
     private Calendar fechaLanzamiento;
 
+    @ManyToMany(mappedBy = "videojuegos")
+    private List<Jugador> jugadores;
+    
     @OneToMany(mappedBy = "videojuego", cascade = CascadeType.PERSIST)
     private List<Logros> logros;
 
@@ -72,7 +77,13 @@ public class Videojuego implements Serializable {
         this.fechaLanzamiento = fechaLanzamiento;
     }
 
-    
+    public List<Jugador> getJugadores() {
+        return jugadores;
+    }
+
+    public void setJugadores(List<Jugador> jugadores) {
+        this.jugadores = jugadores;
+    }
     
     public List<Logros> getLogros() {
         return logros;
@@ -139,6 +150,11 @@ public class Videojuego implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Videojuego{" + "id=" + id + ", name=" + name + ", desarrolladoras=" + desarrolladoras + ", puntaje=" + puntaje + ", fechaLanzamiento=" + fechaLanzamiento + ", jugadores=" + jugadores + ", logros=" + logros + '}';
     }
 
 }

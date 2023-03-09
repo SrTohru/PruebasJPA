@@ -2,6 +2,8 @@ package com.itson.pruebasjpa_235666;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,20 +31,27 @@ public class Jugador implements Serializable {
 
     @Column(name = "pseudonimo", nullable = false, length = 100)
     private String pseudonimo;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "sexo", nullable = false)
     private Sexo sexo;
-    
-    
+
     @Temporal(TemporalType.DATE)
-    @Column(name = "fechaNacimiento" ,nullable = false, length = 100)
+    @Column(name = "fechaNacimiento", nullable = false, length = 100)
     private Calendar fechaNacimiento;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "videojuegos_jugadores",
+            joinColumns = @JoinColumn(name = "id_jugador"),
+            inverseJoinColumns = @JoinColumn(name = "id_videojuego")
+    )
+    public List<Videojuego> videojuegos;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "idDireccion", nullable = false)
     private Direccion direccion;
-    
+
     public Jugador() {
     }
 
@@ -57,6 +68,22 @@ public class Jugador implements Serializable {
         this.sexo = sexo;
         this.fechaNacimiento = fechaNacimiento;
         this.direccion = direccion;
+    }
+
+    public void addVideojuego(Videojuego videojuego) {
+        if (this.videojuegos != null) {
+            this.videojuegos.add(videojuego);
+        } else {
+            this.videojuegos = new LinkedList<>();
+        }
+    }
+
+    public List<Videojuego> getVideojuegos() {
+        return videojuegos;
+    }
+
+    public void setVideojuegos(List<Videojuego> videojuegos) {
+        this.videojuegos = videojuegos;
     }
 
     public Sexo getSexo() {
@@ -98,9 +125,5 @@ public class Jugador implements Serializable {
     public void setFechaNacimiento(Calendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-    
-    
-    
 
-    
 }

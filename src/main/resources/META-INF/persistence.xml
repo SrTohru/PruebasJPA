@@ -6,6 +6,7 @@
     <class>com.itson.pruebasjpa_235666.Logros</class>
     <class>com.itson.pruebasjpa_235666.Direccion</class>
     <class>com.itson.pruebasjpa_235666.Jugador</class>
+    <class>com.itson.pruebasjpa_235666.VideojuegoJugador</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/steam?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
